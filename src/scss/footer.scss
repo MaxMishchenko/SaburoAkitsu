@@ -9,13 +9,15 @@
 	}
 }
 
-.footer__links {
-	display: flex;
-	justify-content: center;
-	margin-bottom: 25px;
+.footer__nav {
+	ul {
+		display: flex;
+		justify-content: center;
+		margin-bottom: 25px;
 
-	li {
-		margin: 0 10px;
+		li {
+			margin: 0 10px;
+		}
 	}
 }
 

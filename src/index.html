@@ -9,21 +9,28 @@
 	<link href="../css/main.css" type="text/css" rel="stylesheet">
 	<title>秋津 三朗</title>
 </head>
-<body id="site">
-<div id="preloader" aria-busy="true" role="progressbar"></div>
+<body>
+<div class="preloader">
+	<div class="preloader__row">
+		<div class="preloader__item"></div>
+		<div class="preloader__item"></div>
+	</div>
+</div>
 <header class="header">
 	<a class="header__logo" href="/">秋津 三朗</a>
-	<ul class="header__nav-list">
-		<li>
-			<a href="#about">About</a>
-		</li>
-		<li>
-			<a href="#news">News</a>
-		</li>
-		<li>
-			<a href="#contacts">Contacts</a>
-		</li>
-	</ul>
+	<nav class="header__nav">
+		<ul>
+			<li>
+				<a href="#about">About</a>
+			</li>
+			<li>
+				<a href="#news">News</a>
+			</li>
+			<li>
+				<a href="#contacts">Contacts</a>
+			</li>
+		</ul>
+	</nav>
 	<div class="header__burger">
 		<span></span>
 	</div>
@@ -88,22 +95,69 @@
 					</picture>
 				</li>
 			</ul>
+			<div class="swiper-button-next"></div>
+			<div class="swiper-button-prev"></div>
 		</div>
 		<div class="swiper-pagination"></div>
-		<div class="swiper-button-next"></div>
-		<div class="swiper-button-prev"></div>
 	</section>
-	<div class="wrapper">
-		<section class="galery">
-			<div class="galery__view">
-				<svg data-view="tiles" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-					<path d="M296 32h192c13.255 0 24 10.745 24 24v160c0 13.255-10.745 24-24 24H296c-13.255 0-24-10.745-24-24V56c0-13.255 10.745-24 24-24zm-80 0H24C10.745 32 0 42.745 0 56v160c0 13.255 10.745 24 24 24h192c13.255 0 24-10.745 24-24V56c0-13.255-10.745-24-24-24zM0 296v160c0 13.255 10.745 24 24 24h192c13.255 0 24-10.745 24-24V296c0-13.255-10.745-24-24-24H24c-13.255 0-24 10.745-24 24zm296 184h192c13.255 0 24-10.745 24-24V296c0-13.255-10.745-24-24-24H296c-13.255 0-24 10.745-24 24v160c0 13.255 10.745 24 24 24z"/>
-				</svg>
-				<svg data-view="list" class="active" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-					<path d="M149.333 216v80c0 13.255-10.745 24-24 24H24c-13.255 0-24-10.745-24-24v-80c0-13.255 10.745-24 24-24h101.333c13.255 0 24 10.745 24 24zM0 376v80c0 13.255 10.745 24 24 24h101.333c13.255 0 24-10.745 24-24v-80c0-13.255-10.745-24-24-24H24c-13.255 0-24 10.745-24 24zM125.333 32H24C10.745 32 0 42.745 0 56v80c0 13.255 10.745 24 24 24h101.333c13.255 0 24-10.745 24-24V56c0-13.255-10.745-24-24-24zm80 448H488c13.255 0 24-10.745 24-24v-80c0-13.255-10.745-24-24-24H205.333c-13.255 0-24 10.745-24 24v80c0 13.255 10.745 24 24 24zm-24-424v80c0 13.255 10.745 24 24 24H488c13.255 0 24-10.745 24-24V56c0-13.255-10.745-24-24-24H205.333c-13.255 0-24 10.745-24 24zm24 264H488c13.255 0 24-10.745 24-24v-80c0-13.255-10.745-24-24-24H205.333c-13.255 0-24 10.745-24 24v80c0 13.255 10.745 24 24 24z"/>
-				</svg>
-				<span class="galery__tooltip">Gallery View</span>
+	<section class="galery">
+		<div class="galery__header">
+			<div class="galery__filters">
+				<h2 class="galery__filters-title">Filter Movies</h2>
+				<div class="galery__filters-container">
+					<div class="galery__filters-rating">
+						<h2 class="galery__filters-title">Raiting</h2>
+						<form>
+							<ul>
+								<li>
+									<input type="radio" id="top-5" name="rating" value="top-5">
+									<label for="top-5">Show TOP 5</label>
+								</li>
+								<li>
+									<input type="radio" id="top-10" name="rating" value="top-10">
+									<label for="top-10">Show TOP 10</label>
+								</li>
+								<li>
+									<input type="radio" id="top-15" name="rating" value="top-15">
+									<label for="top-15">Show TOP 15</label>
+								</li>
+								<li>
+									<input type="radio" id="top-all" name="rating" value="top-all">
+									<label for="top-all">Show ALL</label>
+								</li>
+							</ul>
+						</form>
+					</div>
+					<div class="galery__filters-year">
+						<h2 class="galery__filters-title">Year</h2>
+						<form>
+							<div class="galery__filters-field">
+								<input id="from-y" type="number" min="2000" max="2020" step="1" minlength="4"
+									  maxlength="4" value=""/>
+								<label for="from-y">From</label>
+							</div>
+							<div class="galery__filters-field">
+								<input id="to-y" type="number" min="2000" max="2020" step="1" minlength="4" maxlength="4"
+									  value=""/>
+								<label for="to-y">To</label>
+							</div>
+						</form>
+					</div>
+				</div>
 			</div>
+			<div class="galery__view">
+				<div class="galery__view-icons">
+					<svg data-view="tiles" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+						<path d="M296 32h192c13.255 0 24 10.745 24 24v160c0 13.255-10.745 24-24 24H296c-13.255 0-24-10.745-24-24V56c0-13.255 10.745-24 24-24zm-80 0H24C10.745 32 0 42.745 0 56v160c0 13.255 10.745 24 24 24h192c13.255 0 24-10.745 24-24V56c0-13.255-10.745-24-24-24zM0 296v160c0 13.255 10.745 24 24 24h192c13.255 0 24-10.745 24-24V296c0-13.255-10.745-24-24-24H24c-13.255 0-24 10.745-24 24zm296 184h192c13.255 0 24-10.745 24-24V296c0-13.255-10.745-24-24-24H296c-13.255 0-24 10.745-24 24v160c0 13.255 10.745 24 24 24z"/>
+					</svg>
+					<svg data-view="list" class="active" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+						<path d="M149.333 216v80c0 13.255-10.745 24-24 24H24c-13.255 0-24-10.745-24-24v-80c0-13.255 10.745-24 24-24h101.333c13.255 0 24 10.745 24 24zM0 376v80c0 13.255 10.745 24 24 24h101.333c13.255 0 24-10.745 24-24v-80c0-13.255-10.745-24-24-24H24c-13.255 0-24 10.745-24 24zM125.333 32H24C10.745 32 0 42.745 0 56v80c0 13.255 10.745 24 24 24h101.333c13.255 0 24-10.745 24-24V56c0-13.255-10.745-24-24-24zm80 448H488c13.255 0 24-10.745 24-24v-80c0-13.255-10.745-24-24-24H205.333c-13.255 0-24 10.745-24 24v80c0 13.255 10.745 24 24 24zm-24-424v80c0 13.255 10.745 24 24 24H488c13.255 0 24-10.745 24-24V56c0-13.255-10.745-24-24-24H205.333c-13.255 0-24 10.745-24 24zm24 264H488c13.255 0 24-10.745 24-24v-80c0-13.255-10.745-24-24-24H205.333c-13.255 0-24 10.745-24 24v80c0 13.255 10.745 24 24 24z"/>
+					</svg>
+					<span class="galery__tooltip">Gallery View</span>
+				</div>
+			</div>
+		</div>
+		<div class="galery__content">
 			<article class="galery__card">
 				<div class="galery__card-img-wrapper">
 					<picture>
@@ -194,22 +248,24 @@
 					</div>
 				</div>
 			</article>
-		</section>
-		<a class="btn center" href="#">Load more</a>
-	</div>
+		</div>
+	</section>
+	<a class="btn center" href="#">Load more</a>
 </main>
-<footer class="footer">
-	<ul class="footer__links">
-		<li>
-			<a href="#">Contact As</a>
-		</li>
-		<li>
-			<a href="#">Terms of Use</a>
-		</li>
-		<li>
-			<a href="#">Privacy Policy</a>
-		</li>
-	</ul>
+<footer id="about" class="footer">
+	<nav class="footer__nav">
+		<ul>
+			<li>
+				<a href="#">Contact As</a>
+			</li>
+			<li>
+				<a href="#">Terms of Use</a>
+			</li>
+			<li>
+				<a href="#">Privacy Policy</a>
+			</li>
+		</ul>
+	</nav>
 	<span class="footer__copyright">© 2020<a href="https://spd-ukraine.com/"> SPD-Ukraine</a></span>
 </footer>
 <script src="../js/libs.min.js"></script>
