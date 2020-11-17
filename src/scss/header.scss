@@ -1,0 +1,138 @@
+.header {
+	height: 72px;
+	background-color: var(--color-blue);
+	padding: 20px 150px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	z-index: 99;
+
+	@include media-query($medium-down) {
+		padding: 20px;
+	}
+}
+
+.header__logo {
+	font-size: 32px;
+	color: var(--color-light-grey);
+	line-height: 100%;
+}
+
+.header__nav-list {
+	display: flex;
+
+	@include media-query($small) {
+		display: none;
+		position: absolute;
+		width: 100%;
+		right: 0;
+		left: 0;
+		top: 72px;
+		background-color: var(--color-grey-blue);
+		height: calc(100vh - 72px);
+		padding: 20px;
+		overflow: auto;
+		z-index: 99;
+	}
+
+	li {
+		margin-right: 40px;
+
+		@include media-query($small) {
+			padding: 10px 0;
+			margin-right: 0;
+			text-align: right;
+		}
+
+		&:last-child {
+			margin-right: 0;
+		}
+
+		a {
+			font-size: 17px;
+
+			@include media-query($small) {
+				text-transform: uppercase;
+				font-size: 22px;
+			}
+		}
+	}
+}
+
+.header__burger {
+	width: 45px;
+	height: 27px;
+	position: relative;
+	cursor: pointer;
+	display: none;
+
+	@include media-query($small) {
+		display: block;
+	}
+
+	span {
+		display: block;
+		position: absolute;
+		right: 0;
+		height: 3px;
+		width: 25px;
+		border-radius: 4px;
+		background-color: var(--color-white);
+		transition: width $transition ease-out;
+		animation: line_1 $transition linear 1;
+
+		&:before,
+		&:after {
+			content: '';
+			display: block;
+			position: absolute;
+			height: 3px;
+			border-radius: 4px;
+			background-color: var(--color-white);
+			transition: width $transition ease-out;
+		}
+
+		&:before {
+			top: 12px;
+			width: 45px;
+			right: 0;
+			animation: line_2 .6s linear 1;
+		}
+
+		&:after {
+			top: 24px;
+			width: 35px;
+			right: 0;
+			animation: line_3 .8s linear 1;
+		}
+	}
+}
+
+.menu--active {
+	span {
+		width: 40px;
+		top: 12px;
+		right: 0px;
+		transform: rotate(45deg);
+		transition: width 0s ease-out;
+
+		&:before,
+		&:after {
+			transition: width 0s ease-out;
+		}
+
+		&:before {
+			top: -12px;
+			width: 18px;
+			right: 11px;
+			transform: rotate(90deg);
+		}
+
+		&:after {
+			top: 10px;
+			width: 21px;
+			right: 10px;
+			transform: rotate(90deg);
+		}
+	}
+}

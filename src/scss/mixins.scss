@@ -1,0 +1,67 @@
+// Media Query Mixin
+
+@mixin media-query($media-query) {
+	$breakpoint-found: false;
+
+	@each $breakpoint in $breakpoints {
+		$name: nth($breakpoint, 1);
+		$declaration: nth($breakpoint, 2);
+
+		@if $media-query == $name and $declaration {
+			$breakpoint-found: true;
+
+			@media only screen and #{$declaration} {
+				@content;
+			}
+		}
+	}
+
+	@if $breakpoint-found == false {
+		@warn 'Breakpoint "#{$media-query}" does not exist';
+	}
+}
+
+// Adaptive font size
+
+$maxWidth: 1400;
+
+@mixin adaptiv-font($pcSize, $mobSize) {
+	$addSize: $pcSize - $mobSize;
+	$maxWidth: $maxWidth - 320;
+	font-size: calc(#{$mobSize + px} + #{$addSize} * ((100vw - 320px) / #{$maxWidth}));
+}
+
+// Grid Breakpoints and Class Names
+
+$grid-extra-small: 420px;
+$grid-medium: 750px;
+$grid-large: 990px;
+$grid-tablet: 1280px;
+$grid-notebook: 1366px;
+$grid-widescreen: 1400px;
+
+$extra-small: 'extra-small';
+$small: 'small';
+$medium: 'medium';
+$medium-down: 'medium-down';
+$medium-up: 'medium-up';
+$large: 'large';
+$large-down: 'large-down';
+$large-up: 'large-up';
+$widescreen: 'widescreen';
+$notebook: 'notebook';
+$tablet: 'tablet';
+
+$breakpoints: (
+		$extra-small '(max-width: #{$grid-extra-small - 1})',
+		$small '(max-width: #{$grid-medium - 1})',
+		$medium '(min-width: #{$grid-medium}) and (max-width: #{$grid-large - 1})',
+		$medium-down '(max-width: #{$grid-large - 1})',
+		$medium-up '(min-width: #{$grid-medium})',
+		$large '(min-width: #{$grid-large}) and (max-width: #{$grid-widescreen - 1})',
+		$large-down '(max-width: #{$grid-widescreen - 1})',
+		$large-up '(min-width: #{$grid-large})',
+		$widescreen '(min-width: #{$grid-widescreen})',
+		$notebook '(max-width: #{$grid-notebook})',
+		$tablet '(max-width: #{$grid-tablet})'
+);

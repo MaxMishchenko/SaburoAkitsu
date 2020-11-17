@@ -1,0 +1,25 @@
+.footer {
+	height: 105px;
+	background-color: var(--color-grey-blue);
+	text-align: center;
+	padding: 40px 20px 15px;
+
+	a {
+		font-size: 12px;
+	}
+}
+
+.footer__links {
+	display: flex;
+	justify-content: center;
+	margin-bottom: 25px;
+
+	li {
+		margin: 0 10px;
+	}
+}
+
+.footer__copyright {
+	color: var(--color-white);
+	font-size: 12px;
+}
