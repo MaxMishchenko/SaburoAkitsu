@@ -1,0 +1,22 @@
+.social-bar {
+	position: absolute;
+	right: -30px;
+	top: 120px;
+	z-index: 999;
+
+	ul {
+		li {
+			display: flex;
+			padding-bottom: 10px;
+
+			&:last-child {
+				padding-bottom: 0;
+			}
+
+			svg {
+				width: 37px;
+				height: 37px;
+			}
+		}
+	}
+}

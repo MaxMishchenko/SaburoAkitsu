@@ -63,11 +63,19 @@
 	font-size: 17px;
 	color: var(--color-dark-blue);
 	display: block;
-	margin-bottom: 10px;
 
 	@include media-query($small) {
 		font-size: 15px;
 	}
+}
+
+.galery__card-date {
+	margin-bottom: 15px;
+}
+
+.galery__card-rating {
+	margin-bottom: 10px;
+	transition: all .8s;
 }
 
 .galery__card-summary {
@@ -96,6 +104,12 @@
 	align-items: center;
 	justify-content: space-between;
 	margin-bottom: 60px;
+	position: relative;
+
+	@include media-query($small) {
+		flex-direction: column;
+		margin-bottom: 20px;
+	}
 }
 
 .galery__view {
@@ -146,6 +160,10 @@
 	transition: $transition;
 	z-index: 99;
 
+	@include media-query($medium-down) {
+		display: none;
+	}
+
 	&:before {
 		content: '';
 		position: absolute;
@@ -178,23 +196,70 @@
 	.galery__card {
 		width: calc(50% - 10px);
 		position: relative;
-		margin: 10px 0;
+		margin-bottom: 20px;
+
+		@include media-query($medium-down) {
+			width: 100%;
+		}
+
+		&:hover {
+			.galery__card-info {
+				top: 15px;
+			}
+
+			.galery__card-rating {
+				margin-bottom: 15px;
+			}
+		}
 	}
 
 	.galery__card-info {
 		position: absolute;
-		display: none;
+		background-color: #b67929c2;
+		left: 15px;
+		right: 15px;
+		bottom: 15px;
+		margin-left: 0;
+		padding: 15px;
+		top: 72%;
+		transition: all .8s;
+
+		.galery__card-title,
+		.galery__card-date,
+		.galery__card-rating,
+		.galery__card-summary,
+		.galery__card-text {
+			color: var(--color-white);
+		}
 	}
 
 	.galery__card-img-wrapper {
 		width: 100%;
 		height: 430px;
 
+		@include media-query($medium-down) {
+			margin-bottom: 0;
+		}
+
 		img {
 			width: 100%;
 			height: 430px;
 			object-fit: cover;
 		}
+	}
+
+	.galery__card-footer {
+		overflow: auto;
+		-ms-overflow-style: none;
+		overflow: -moz-scrollbars-none;
+
+		&::-webkit-scrollbar {
+			width: 0;
+		}
+	}
+
+	.galery__card-rating {
+		margin-bottom: 0;
 	}
 }
 
@@ -210,6 +275,11 @@
 	cursor: pointer;
 	flex-wrap: wrap;
 
+	@include media-query($small) {
+		margin-bottom: 20px;
+		width: 100%;
+	}
+
 	&:after {
 		content: '';
 		position: absolute;
@@ -220,6 +290,7 @@
 		border-radius: 2px;
 		display: block;
 		transition: $transition;
+		pointer-events: none;
 	}
 
 	label {
@@ -239,6 +310,10 @@
 .galery__filters-container {
 	display: none;
 	margin-top: 30px;
+
+	@include media-query($small) {
+		margin: 30px auto 0;
+	}
 }
 
 .galery__filters-rating {
@@ -268,8 +343,12 @@
 	flex-direction: column;
 	width: 200px;
 
+	@include media-query($extra-small) {
+		width: 100%;
+	}
+
 	.galery__filters-title {
-		margin-bottom: 5px;
+		margin-bottom: 15px;
 	}
 
 	input {

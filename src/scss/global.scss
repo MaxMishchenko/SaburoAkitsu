@@ -50,7 +50,7 @@ a {
 	cursor: pointer;
 	display: block;
 	text-align: center;
-	padding: 10px 0 0;
+	padding: 14px 0 0;
 
 	&:hover {
 		color: var(--color-light-gold);
@@ -98,4 +98,8 @@ input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
 	-webkit-appearance: none;
 	margin: 0;
+}
+
+.tile--hover {
+	top: 15px !important;
 }
