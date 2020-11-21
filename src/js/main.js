@@ -49,7 +49,7 @@ $(document).ready(function () {
 		if ($thisData == 'tiles') {
 			$galeryContent.addClass('tiles--view');
 			
-			if (!$('#single-article').length) {
+			if ((!$('#single-article').length) && ($('input[type="number"]').val() == "")) {
 				$.ajax({
 					url: "../articles.html",
 					cache: false,
@@ -61,7 +61,7 @@ $(document).ready(function () {
 		} else {
 			$galeryContent.removeClass('tiles--view');
 			
-			if (!$('#single-article').hasClass('loaded')) {
+			if (!$('#single-article').hasClass('loaded') && (!($('input[type="number"]').val().length))) {
 				$('#single-article').remove();
 			}
 		}
@@ -91,14 +91,18 @@ $(document).ready(function () {
 		
 		$(this).hide();
 		
-		setTimeout(function () {
-			$('html, body').animate({
-				scrollTop: $('#single-article').offset().top
-			}, 800);
-		}, 500);
-		
 		return false;
 	});
+	
+	function loadDefaultArticles() {
+		$.ajax({
+			url: "../index.html",
+			cache: false,
+			success: function (html) {
+				$('.galery').append($(html).filter('.galery__content'));
+			}
+		});
+	}
 	
 	function loadAllArticles() {
 		$.ajax({
@@ -106,27 +110,214 @@ $(document).ready(function () {
 			cache: false,
 			success: function (html) {
 				$galeryContent.append(html);
-				$('#single-article').addClass('loaded');
+				$('#load-more').remove();
 			}
 		});
 	}
 	
-	/*function rating() {
-		var $ratingArray = [];
+	function removeDuplicates() {
+		var $checker = {};
 		
-		setTimeout(function () {
-			$('.galery__card-rating').each(function () {
-				$ratingArray = $(this).attr('data-rating');
-			});
+		$('.galery__card-title').each(function () {
+			var $text = $(this).text();
 			
-		}, 100);
+			if ($checker[$text]) {
+				$(this).parents('.galery__card').remove();
+			} else {
+				$checker[$text] = true;
+			}
+		});
 	}
 	
-	$('#top-2').change(function () {
-		loadAllArticles();
-		rating();
-	});*/
+	function searchFromDate() {
+		var $dateArray = [];
+		var $enteredDateFrom = $('#from-y').val();
+		var $enteredDateTo = $('#to-y').val();
+		var $nothingFound = '<div class="nothing-found"><span class="nothing-found__text">No results were found for your search.</span><a class="btn" href="/">Back to home</a></div>';
+		
+		$('.galery__content').addClass('ajax--loader');
+		
+		var $dateArray = $('.galery__content').find('.galery__card').map(function () {
+			return $(this).find('.galery__card-date').attr('data-year');
+		});
+		
+		for (var i = 0; i < $dateArray.length; ++i) {
+			if (!($dateArray[i] <= $enteredDateTo && $dateArray[i] >= $enteredDateFrom)) {
+				$('.galery__content').find('.galery__card-date[data-year="' + $dateArray[i] + '"]').parents('.galery__card').remove();
+			}
+		}
+		
+		if (!$('.galery__card').length) {
+			$('.galery__content').removeClass('ajax--loader');
+			$('.galery__content').html($nothingFound);
+			$('input').prop('disabled', true);
+			$('.galery__view').css('pointer-events', 'none');
+		} else {
+			$('.nothing-found').remove();
+			
+			setTimeout(function () {
+				$('.galery__content').removeClass('ajax--loader');
+			}, 800);
+		}
+	}
 	
+	$('form[name="filters"] input[type="radio"]').change(function () {
+		var $ratingArray = [];
+		var $thisTopVal = $(this).val();
+		var $fromYear = $('#from-y').val().length;
+		var $toYear = $('#to-y').val().length;
+		
+		$('.galery__content').addClass('ajax--loader');
+		
+		if ($thisTopVal != "all") {
+			loadDefaultArticles();
+			loadAllArticles();
+			
+			setTimeout(function () {
+				var $ratingArray = $('.galery__content').find('.galery__card').map(function () {
+					return $(this).find('.galery__card-rating').attr('data-rating');
+				});
+				
+				for (var i = 0; i < $ratingArray.length; ++i) {
+					if ($ratingArray[i] > parseInt($thisTopVal)) {
+						$('.galery__content').find('.galery__card-rating[data-rating="' + $ratingArray[i] + '"]').parents('.galery__card').remove();
+					}
+				}
+				
+				if ($fromYear && $toYear) {
+					searchFromDate();
+				}
+			}, 100);
+			
+			setTimeout(function () {
+				removeDuplicates();
+			}, 150);
+			
+			setTimeout(function () {
+				$('.galery__content').removeClass('ajax--loader');
+			}, 800);
+			
+		} else {
+			loadAllArticles();
+			
+			if ($fromYear && $toYear) {
+				setTimeout(function () {
+					searchFromDate();
+				}, 100);
+			}
+			
+			setTimeout(function () {
+				removeDuplicates();
+			}, 150);
+			
+			setTimeout(function () {
+				$('.galery__content').removeClass('ajax--loader');
+			}, 800);
+		}
+	});
+	
+	$('form[name="filters"] input[type="number"]').keyup(function (e) {
+		var $fromYear = $('#from-y').val().length;
+		var $toYear = $('#to-y').val().length;
+		var $thisMaxCharVal = $(this).attr('maxlength');
+		var $maxChar = parseInt($thisMaxCharVal) + 2;
+		var $CharCount = $(this).val().length;
+		var $charsLeft = $maxChar - $CharCount;
+		var $maxInputVal = $(this).attr('max');
+		var $minInputVal = $(this).attr('min');
+		
+		if ($charsLeft > 0) {
+			$(this).parent('.galery__filters-field').removeClass('limit');
+			$('.form-error').hide(100);
+			$('input[type="radio"]').prop('disabled', false);
+		} else {
+			var $currentVal = $(this).val();
+			
+			if (!(e.key === "Enter" || e.keyCode === 13)) {
+				var $cutValue = $currentVal.substring(0, $currentVal.length - 1);
+				$(this).parent('.galery__filters-field').addClass('limit');
+				$('.form-error').show(100);
+				$(this).val($cutValue);
+				$('input[type="radio"]').prop('disabled', true);
+			}
+		}
+		
+		if (e.key === "Backspace" || e.keyCode === 8 || e.key === "Delete" || e.keyCode === 46) {
+			$(this).parent('.galery__filters-field').removeClass('limit');
+			$('input[type="radio"]').prop('disabled', false);
+		}
+		
+		if ((e.key === "Enter" || e.keyCode === 13) && ($fromYear == 4)) {
+			var $fromYearVal = $('#from-y').val();
+			
+			setTimeout(function () {
+				if ($fromYearVal <= $maxInputVal && $fromYearVal >= $minInputVal) {
+					$('#to-y').focus();
+				} else {
+					$('#from-y').parent('.galery__filters-field').addClass('limit');
+					$('#from-y').focus();
+					$('.form-error').show(100);
+					$('input[type="radio"]').prop('disabled', true);
+				}
+			}, 100);
+		}
+		
+		if ((e.key === "Enter" || e.keyCode === 13) && ($toYear == 4)) {
+			var $toYearVal = $('#to-y').val();
+			
+			setTimeout(function () {
+				if (($toYearVal <= $maxInputVal && $toYearVal >= $minInputVal) && ($fromYearVal <= $toYearVal)) {
+					if ($fromYear == '') {
+						$('#from-y').focus();
+					}
+				} else {
+					$('#to-y').parent('.galery__filters-field').addClass('limit');
+					$('#to-y').focus();
+					$('.form-error').show(100);
+					$('input[type="radio"]').prop('disabled', true);
+				}
+			}, 100);
+		}
+		
+		$('#from-y').focusout(function () {
+			var $fromYearValue = parseInt($(this).val());
+			
+			if ($fromYearValue.length < 4 || $fromYearValue < $minInputVal || $fromYearValue > $maxInputVal) {
+				$('#from-y').parent('.galery__filters-field').addClass('limit');
+				$('#from-y').focus();
+				$('.form-error').show(100);
+				$('input[type="radio"]').prop('disabled', true);
+			}
+		});
+		
+		$('#to-y').focusout(function () {
+			var $toYearValue = parseInt($(this).val());
+			
+			if ($toYearValue.length < 4 || $toYearValue < $minInputVal || $toYearValue > $maxInputVal) {
+				$('#to-y').parent('.galery__filters-field').addClass('limit');
+				$('#to-y').focus();
+				$('.form-error').show(100);
+				$('input[type="radio"]').prop('disabled', true);
+			}
+		});
+		
+		if ((e.key === "Enter" || e.keyCode === 13) && ($toYear == 4 && $fromYear == 4) && ($fromYearVal <= $maxInputVal && $fromYearVal >= $minInputVal) && ($toYearVal <= $maxInputVal && $toYearVal >= $minInputVal) && ($fromYearVal <= $toYearVal)) {
+			if ($('form[name="filters"] input[type="radio"]').is(':checked')) {
+				searchFromDate();
+			} else {
+				loadDefaultArticles();
+				loadAllArticles();
+				
+				setTimeout(function () {
+					removeDuplicates();
+				}, 150);
+				
+				setTimeout(function () {
+					searchFromDate();
+				}, 100);
+			}
+		}
+	});
 });
 
 $(window).resize(function () {

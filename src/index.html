@@ -126,45 +126,44 @@
 			<div class="galery__filters">
 				<h2 class="galery__filters-title">Filter Movies</h2>
 				<div class="galery__filters-container">
-					<div class="galery__filters-rating">
-						<h2 class="galery__filters-title">Raiting</h2>
-						<form>
+					<form name="filters">
+						<div class="galery__filters-rating">
+							<h2 class="galery__filters-title">Raiting</h2>
 							<ul>
 								<li>
-									<input type="radio" id="top-2" name="rating" value="top-2">
-									<label for="top-2">Show TOP 2</label>
-								</li>
-								<li>
-									<input type="radio" id="top-4" name="rating" value="top-4">
-									<label for="top-4">Show TOP 4</label>
-								</li>
-								<li>
-									<input type="radio" id="top-5" name="rating" value="top-5">
+									<input type="radio" id="top-5" name="rating" value="5">
 									<label for="top-5">Show TOP 5</label>
 								</li>
 								<li>
-									<input type="radio" id="top-all" name="rating" value="top-all">
+									<input type="radio" id="top-10" name="rating" value="10">
+									<label for="top-10">Show TOP 10</label>
+								</li>
+								<li>
+									<input type="radio" id="top-15" name="rating" value="15">
+									<label for="top-15">Show TOP 15</label>
+								</li>
+								<li>
+									<input type="radio" id="top-all" name="rating" value="all">
 									<label for="top-all">Show ALL</label>
 								</li>
 							</ul>
-						</form>
-					</div>
-					<div class="galery__filters-year">
-						<h2 class="galery__filters-title">Year</h2>
-						<form>
+						</div>
+						<div class="galery__filters-year">
+							<h2 class="galery__filters-title">Year</h2>
 							<div class="galery__filters-field">
 								<input id="from-y" type="number" min="1900" max="2020" step="1" minlength="4"
-									   maxlength="4" value=""/>
+									   maxlength="4" value="" placeholder="From 1900"/>
 								<label for="from-y">From</label>
 							</div>
 							<div class="galery__filters-field">
 								<input id="to-y" type="number" min="1900" max="2020" step="1" minlength="4"
 									   maxlength="4"
-									   value=""/>
+									   value="" placeholder="To 2020"/>
 								<label for="to-y">To</label>
 							</div>
-						</form>
-					</div>
+							<span class="form-error">The value must be between 1900 and 2020, and "From" must be greater or equal to "To"!</span>
+						</div>
+					</form>
 				</div>
 			</div>
 			<div class="galery__view">

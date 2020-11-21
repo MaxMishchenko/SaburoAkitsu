@@ -13,14 +13,14 @@
 	.swiper-pagination {
 		left: 0;
 		right: 0;
-		background-color: var(--color-white);
+		background-color: $color_white;
 		display: flex;
 		justify-content: center;
 		align-items: center;
 		padding: 14px 0;
 
 		.swiper-pagination-bullet {
-			background-color: var(--color-dark-grey);
+			background-color: $color_dark_grey;
 			opacity: 1;
 			margin: 0 5px;
 			width: 10px;
@@ -28,7 +28,7 @@
 		}
 
 		.swiper-pagination-bullet-active {
-			background: var(--color-dark-blue);
+			background: $color_dark_blue;
 		}
 	}
 
@@ -164,7 +164,7 @@
 .swiper-slide__text,
 .swiper-slide__title {
 	font-size: 32px;
-	color: var(--color-light-grey);
+	color: $color_light_grey;
 	margin-bottom: 15px;
 
 	@include media-query($small) {

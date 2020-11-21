@@ -7,7 +7,7 @@
 
 .galery__card {
 	padding: 15px;
-	background-color: var(--color-white);
+	background-color: $color_white;
 	width: 100%;
 	min-height: 380px;
 	display: flex;
@@ -54,14 +54,14 @@
 .galery__card-title {
 	font-size: 25px;
 	font-weight: 700;
-	color: var(--color-dark-blue);
+	color: $color_dark_blue;
 	margin-bottom: 10px;
 }
 
 .galery__card-date,
 .galery__card-rating {
 	font-size: 17px;
-	color: var(--color-dark-blue);
+	color: $color_dark_blue;
 	display: block;
 
 	@include media-query($small) {
@@ -80,7 +80,7 @@
 
 .galery__card-summary {
 	font-size: 25px;
-	color: var(--color-dark-blue);
+	color: $color_dark_blue;
 	font-weight: 400;
 	margin-bottom: 10px;
 
@@ -91,7 +91,7 @@
 
 .galery__card-text {
 	font-size: 21px;
-	color: var(--color-dark-blue);
+	color: $color_dark_blue;
 	display: inline;
 
 	@include media-query($small) {
@@ -125,12 +125,12 @@
 	svg {
 		width: 17px;
 		height: 100%;
-		fill: var(--color-dark-blue);
+		fill: $color_dark_blue;
 		transition: $transition;
 		cursor: pointer;
 
 		&:hover {
-			fill: var(--color-light-gold);
+			fill: $color_light_gold;
 		}
 
 		&:first-child {
@@ -146,9 +146,9 @@
 
 .galery__tooltip {
 	font-size: 13px;
-	color: var(--color-dark-blue);
-	border: 2px solid var(--color-dark-blue);
-	background-color: var(--color-white);
+	color: $color_dark_blue;
+	border: 2px solid $color_dark_blue;
+	background-color: $color_white;
 	border-radius: 2px;
 	display: block;
 	padding: 2px 5px;
@@ -170,7 +170,7 @@
 		bottom: -12px;
 		right: 5px;
 		border: 6px solid transparent;
-		border-top: 6px solid var(--color-dark-blue);
+		border-top: 6px solid $color_dark_blue;
 		border-radius: 2px;
 		display: block;
 	}
@@ -181,7 +181,7 @@
 		bottom: -9px;
 		right: 5px;
 		border: 6px solid transparent;
-		border-top: 6px solid var(--color-white);
+		border-top: 6px solid $color_white;
 		border-radius: 2px;
 		display: block;
 	}
@@ -229,7 +229,7 @@
 		.galery__card-rating,
 		.galery__card-summary,
 		.galery__card-text {
-			color: var(--color-white);
+			color: $color_white;
 		}
 	}
 
@@ -266,8 +266,8 @@
 .galery__filters {
 	width: 400px;
 	min-height: 40px;
-	border: solid 3px var(--color-dark-blue);
-	background-color: var(--color-white);
+	border: solid 3px $color_dark_blue;
+	background-color: $color_white;
 	display: flex;
 	align-items: center;
 	padding: 7px 15px;
@@ -286,7 +286,7 @@
 		top: 15px;
 		right: 15px;
 		border: 5px solid transparent;
-		border-top: 7px solid var(--color-dark-blue);
+		border-top: 7px solid $color_dark_blue;
 		border-radius: 2px;
 		display: block;
 		transition: $transition;
@@ -295,7 +295,7 @@
 
 	label {
 		font-size: 17px;
-		color: var(--color-dark-blue);
+		color: $color_dark_blue;
 		cursor: pointer;
 	}
 }
@@ -303,7 +303,7 @@
 .galery__filters-title {
 	font-size: 17px;
 	font-weight: 700;
-	color: var(--color-dark-blue);
+	color: $color_dark_blue;
 	width: 100%;
 }
 
@@ -352,8 +352,8 @@
 	}
 
 	input {
-		border: solid 1px var(--color-dark-blue);
-		background-color: var(--color-white);
+		border: solid 1px $color_dark_blue;
+		background-color: $color_white;
 		border-radius: 2px;
 		height: 30px;
 		width: 100%;
@@ -365,7 +365,7 @@
 		position: relative;
 		top: -30px;
 		left: 5px;
-		border-right: solid 1px var(--color-dark-blue);
+		border-right: solid 1px $color_dark_blue;
 		width: 44px;
 		height: 30px;
 		display: block;
@@ -375,5 +375,55 @@
 
 .galery__filters-field {
 	cursor: initial;
-	margin-bottom: -20px;
+}
+
+.limit {
+	animation: 1.2s ease-in-out 0s normal none 1 running error;
+}
+
+.galery__content {
+	position: relative;
+
+	&:before {
+		content: '';
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		background-color: $color_grey;
+		position: absolute;
+		z-index: -1;
+	}
+
+	&:after {
+		content: 'Loading...';
+		position: absolute;
+		z-index: 4;
+		width: 75px;
+		height: 75px;
+		background-color: $color_blue;
+		border-radius: 100%;
+		top: 40px;
+		left: 50%;
+		transform: translateX(-50%);
+		z-index: -1;
+		transition: $transition;
+		opacity: 0;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		color: $color_white;
+		font-size: 17px;
+	}
+}
+
+.ajax--loader {
+	&:before {
+		z-index: 1;
+	}
+
+	&:after {
+		z-index: 2;
+		opacity: 1;
+	}
 }

@@ -1,6 +1,6 @@
 .footer {
 	height: 105px;
-	background-color: var(--color-grey-blue);
+	background-color: $color_grey_blue;
 	text-align: center;
 	padding: 40px 20px 15px;
 	position: relative;
@@ -23,6 +23,6 @@
 }
 
 .footer__copyright {
-	color: var(--color-white);
+	color: $color_white;
 	font-size: 12px;
 }
